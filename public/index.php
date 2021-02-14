@@ -15,5 +15,5 @@
 define('APP_PATH', __DIR__ . '/../app/');
 // 加载框架引导文件
 require __DIR__ . '/../core/start.php';
-// 自动生成对应的模块
+// 自动生成对应的模块 生成模块已经被修复
 //\think\Build::module('home');

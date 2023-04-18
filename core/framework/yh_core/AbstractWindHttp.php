@@ -1,9 +1,9 @@
 <?php
 /**
- * @author Qian Su <aoxue.1988.su.qian@163.com>
- * @copyright ©2003-2103 phpwind.com
- * @license http://www.windframework.com
- * @version $Id: AbstractWindHttp.php 3635 2012-06-07 03:51:37Z yishuo $
+ * @author YanHe
+ * @copyright ©2003-2103 YHCMS
+ * @license YHCMS
+ * @version $Id: AbstractWindHttp.php 3635 2012-06-07 03:51:37Z YanHe $
  * @package http
  * @subpackage transfer
  */

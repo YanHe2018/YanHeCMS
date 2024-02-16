@@ -1,0 +1,440 @@
+<!doctype html>
+<html>
+<head>
+<template source='TPL:admin.common.head' />
+</head>
+<body>
+<div class="wrap">
+	<div class="nav">
+		<ul class="cc">
+			<!--# foreach($addons as $key => $value){ #-->
+			<li><a href="{@url:appcenter/style/run?type=$key}">{$value[0]}</a></li>
+			<!--# } #-->
+			<li><a href="{@url:appcenter/style/install}">本地安装</a></li>
+			<li class="current"><a href="{@url:appcenter/style/manage}">界面管理</a></li>
+		</ul>
+	</div>
+	<form class="J_ajaxForm" action="{@url:appcenter/style/doManage?_json=1}" method="post" enctype="multipart/form-data">
+	<div class="h_a">全局</div>
+	<div class="table_full">
+		<table width="100%">
+			<colgroup>
+				<col class="th">
+				<col width="400">
+			</colgroup>
+			<tr>
+				<th>站点logo</th>
+				<td>
+					<div class="mb5"><input name="logo" class="J_upload_preview" type="file" data-preview="#J_logo_preview"></div>
+					<!--# if($logo){ #-->
+					<img id="J_logo_preview" src="{@Pw::getPath($logo)}" align="top" class="mr10">
+					<a class="J_ajax_del" href="{@url:appcenter/style/delete?type=logo&path=$logo}">[删除]</a>
+					<input type="hidden" name="oldlogo" value="{$logo}">
+					<!--# }else{ #-->
+					<img id="J_logo_preview" style="display:none">
+					<!--# } #-->
+				</td>
+				<td><div class="fun_tips">请自行备份之前的logo，以免被替换无法找回<br>默认模板下建议图片高度为50以内</div></td>
+			</tr>
+			<tr>
+				<th>全站背景图片</th>
+				<td>
+				<div class="mb5"><input name="bg" class="J_upload_preview" type="file" data-preview="#J_bg_preview"></div>
+					<!--# if($bg){ #-->
+					<img id="J_bg_preview" src="{@Pw::getPath($bg)}" align="top" class="mr10">
+					<a class="J_ajax_del" href="{@url:appcenter/style/delete?type=bg&path=$bg}">[删除]</a>
+					<input type="hidden" name="oldbg" value="{$bg}">
+					<!--# }else{ #-->
+					<img id="J_bg_preview" style="display:none">
+					<!--# } #-->
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>全站背景颜色</th>
+				<td><input name="bgcolor" type="hidden" class="J_color_input bgcolor" value="{$bgcolor}">
+					<span class="J_color_picker color_pick"><em style="background:{$bgcolor};"></em></span>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>全站背景展示方式</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="bgtile" type="radio" value="no-repeat" {@Pw::ifcheck($bgtile == "no-repeat")}><span>正常</span></label></li>
+						<li><label><input name="bgtile" type="radio" value="fixed" {@Pw::ifcheck($bgtile == "fixed")}><span>锁定</span></label></li>
+						<li><label><input name="bgtile" type="radio" value="repeat-x" {@Pw::ifcheck($bgtile == "repeat-x")}><span>横向平铺</span></label></li>
+						<li><label><input name="bgtile" type="radio" value="repeat-y" {@Pw::ifcheck($bgtile == "repeat-y")}><span>竖向平铺</span></label></li>
+						<li><label><input name="bgtile" type="radio" value="repeat" {@Pw::ifcheck($bgtile == "repeat")}><span>完全平铺</span></label></li>
+					</ul>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>全局背景展示位置</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="bgalign" type="radio" value="center" {@Pw::ifcheck($bgalign == "center")}><span>居中</span></label></li>
+						<li><label><input name="bgalign" type="radio" value="left" {@Pw::ifcheck($bgalign == "left")}><span>居左</span></label></li>
+						<li><label><input name="bgalign" type="radio" value="right" {@Pw::ifcheck($bgalign == "right")}><span>居右</span></label></li>
+					</ul>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>全站文本大小</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="size" type="radio" value="" {@Pw::ifcheck($size == "")}><span>默认</span></label></li>
+						<li><label><input name="size" type="radio" value="12px" {@Pw::ifcheck($size == "12px")}><span>12像素</span></label></li>
+						<li><label><input name="size" type="radio" value="14px" {@Pw::ifcheck($size == "14px")}><span>14像素</span></label></li>
+						<li><label><input name="size" type="radio" value="16px" {@Pw::ifcheck($size == "16px")}><span>16像素</span></label></li>
+						<li><label><input name="size" type="radio" value="18px" {@Pw::ifcheck($size == "18px")}><span>18像素</span></label></li>
+					</ul>
+				</td>
+				<td>
+					<div class="fun_tips">
+						<p>默认为不为指定，根据模板自身的样式来展示</p>
+						<p style="font-size:12px;">12像素的字体效果</p>
+						<p style="font-size:14px;">14像素的字体效果</p>
+						<p style="font-size:16px;">16像素的字体效果</p>
+						<p style="font-size:18px">18像素的字体效果</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>全站字体选择</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="font" type="radio" value="" {@Pw::ifcheck($font == "")}><span>默认</span></label></li>
+						<li><label><input name="font" type="radio" value="Simsun" {@Pw::ifcheck($font == "Simsun")}><span>宋体</span></label></li>
+						<li><label><input name="font" type="radio" value="'Microsoft Yahei'" {@Pw::ifcheck($font == "'Microsoft Yahei'")}><span>微软雅黑</span></label></li>
+					</ul>
+				</td>
+				<td>
+					<div class="fun_tips">
+						<p>默认为不为指定，根据模板自身的样式来展示</p>
+						<p style="font-family:Simsun;">宋体的展示效果</p>
+						<p style="font-family:'Microsoft Yahei';">微软雅黑的展示效果</p>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>全站链接颜色</th>
+				<td>
+					<input name="corelink" type="hidden" class="J_color_input bgcolor" value="{$corelink}">
+					<span class="J_color_picker color_pick"><em style="background:{$corelink};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>全站文本颜色</th>
+				<td>
+					<input name="coretext" type="hidden" class="J_color_input bgcolor" value="{$coretext}">
+					<span class="J_color_picker color_pick"><em style="background:{$coretext};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>帖子列表标题字体大小</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="subjectsize" type="radio" value="" {@Pw::ifcheck($subjectsize == "")}><span>默认</span></label></li>
+						<li><label><input name="subjectsize" type="radio" value="12px" {@Pw::ifcheck($subjectsize == "12px")}><span>12像素</span></label></li>
+						<li><label><input name="subjectsize" type="radio" value="14px" {@Pw::ifcheck($subjectsize == "14px")}><span>14像素</span></label></li>
+						<li><label><input name="subjectsize" type="radio" value="16px" {@Pw::ifcheck($subjectsize == "16px")}><span>16像素</span></label></li>
+						<li><label><input name="subjectsize" type="radio" value="18px" {@Pw::ifcheck($subjectsize == "18px")}><span>18像素</span></label></li>
+					</ul>
+				</td>
+				<td>
+					<div class="fun_tips">
+						<p>默认为不为指定，根据模板自身的样式来展示</p>
+						<p style="font-size:12px;">12像素的字体效果</p>
+						<p style="font-size:14px;">14像素的字体效果</p>
+						<p style="font-size:16px;">16像素的字体效果</p>
+						<p style="font-size:18px">18像素的字体效果</p>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="h_a">头部导航</div>
+	<div class="table_full">
+		<table width="100%">
+			<colgroup>
+				<col class="th">
+				<col width="400">
+			</colgroup>
+			<tr>
+				<th>背景图片</th>
+				<td>
+				<div class="mb5"><input name="headbg" class="J_upload_preview" type="file" data-preview="#J_headbg_preview"></div>
+					<!--# if($headbg){ #-->
+					<img id="J_headbg_preview" src="{@Pw::getPath($headbg)}" align="top" class="mr10">
+					<a class="J_ajax_del" href="{@url:appcenter/style/delete?type=headbg&path=$headbg}">[删除]</a>
+					<input type="hidden" name="oldheadbg" value="{$headbg}">
+					<!--# }else{ #-->
+					<img id="J_headbg_preview" style="display:none">
+					<!--# } #-->
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>背景颜色</th>
+				<td><input name="headbgcolor" type="hidden" class="J_color_input bgcolor" value="{$headbgcolor}">
+					<span class="J_color_picker color_pick"><em style="background:{$headbgcolor};"></em></span>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>背景展示方式</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="headbgtile" type="radio" value="no-repeat" {@Pw::ifcheck($headbgtile == "no-repeat")}><span>正常</span></label></li>
+						<li><label><input name="headbgtile" type="radio" value="fixed" {@Pw::ifcheck($headbgtile == "fixed")}><span>锁定</span></label></li>
+						<li><label><input name="headbgtile" type="radio" value="repeat-x" {@Pw::ifcheck($headbgtile == "repeat-x")}><span>横向平铺</span></label></li>
+						<li><label><input name="headbgtile" type="radio" value="repeat-y" {@Pw::ifcheck($headbgtile == "repeat-y")}><span>竖向平铺</span></label></li>
+						<li><label><input name="headbgtile" type="radio" value="repeat" {@Pw::ifcheck($headbgtile == "repeat")}><span>完全平铺</span></label></li>
+					</ul>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>背景展示位置</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="headbgalign" type="radio" value="center" {@Pw::ifcheck($headbgalign == "center")}><span>居中</span></label></li>
+						<li><label><input name="headbgalign" type="radio" value="left" {@Pw::ifcheck($headbgalign == "left")}><span>居左</span></label></li>
+						<li><label><input name="headbgalign" type="radio" value="right" {@Pw::ifcheck($headbgalign == "right")}><span>居右</span></label></li>
+					</ul>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>导航链接颜色</th>
+				<td>
+					<input name="headlink" type="hidden" class="J_color_input bgcolor" value="{$headlink}">
+					<span class="J_color_picker color_pick"><em style="background:{$headlink};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>激活状态背景颜色</th>
+				<td>
+					<input name="headactivelink" type="hidden" class="J_color_input bgcolor" value="{$headactivelink}">
+					<span class="J_color_picker color_pick"><em style="background:{$headactivelink};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>激活状态链接颜色</th>
+				<td>
+					<input name="headactivecolor" type="hidden" class="J_color_input bgcolor" value="{$headactivecolor}">
+					<span class="J_color_picker color_pick"><em style="background:{$headactivecolor};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="h_a">全局通用模块</div>
+	<div class="table_full">
+		<table width="100%">
+			<colgroup>
+				<col class="th">
+				<col width="400">
+			</colgroup>
+			<tr>
+				<th>模块背景图片</th>
+				<td>
+				<div class="mb5"><input name="boxbg" class="J_upload_preview" type="file" data-preview="#J_boxbg_preview"></div>
+					<!--# if($boxbg){ #-->
+					<img id="J_boxbg_preview" src="{@Pw::getPath($boxbg)}" align="top" class="mr10">
+					<a class="J_ajax_del" href="{@url:appcenter/style/delete?type=boxbg&path=$boxbg}">[删除]</a>
+					<input type="hidden" name="oldboxbg" value="{$boxbg}">
+					<!--# }else{ #-->
+					<img id="J_boxbg_preview" style="display:none">
+					<!--# } #-->
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>模块背景颜色</th>
+				<td><input name="boxbgcolor" type="hidden" class="J_color_input bgcolor" value="{$boxbgcolor}">
+					<span class="J_color_picker color_pick"><em style="background:{$boxbgcolor};"></em></span>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>模块背景展示方式</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="boxbgtile" type="radio" value="no-repeat" {@Pw::ifcheck($boxbgtile == "no-repeat")}><span>正常</span></label></li>
+						<li><label><input name="boxbgtile" type="radio" value="fixed" {@Pw::ifcheck($boxbgtile == "fixed")}><span>锁定</span></label></li>
+						<li><label><input name="boxbgtile" type="radio" value="repeat-x" {@Pw::ifcheck($boxbgtile == "repeat-x")}><span>横向平铺</span></label></li>
+						<li><label><input name="boxbgtile" type="radio" value="repeat-y" {@Pw::ifcheck($boxbgtile == "repeat-y")}><span>竖向平铺</span></label></li>
+						<li><label><input name="boxbgtile" type="radio" value="repeat" {@Pw::ifcheck($boxbgtile == "repeat")}><span>完全平铺</span></label></li>
+					</ul>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>模块背景展示位置</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="boxbgalign" type="radio" value="center" {@Pw::ifcheck($boxbgalign == "center")}><span>居中</span></label></li>
+						<li><label><input name="boxbgalign" type="radio" value="left" {@Pw::ifcheck($boxbgalign == "left")}><span>居左</span></label></li>
+						<li><label><input name="boxbgalign" type="radio" value="right" {@Pw::ifcheck($boxbgalign == "right")}><span>居右</span></label></li>
+					</ul>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>模块边框颜色</th>
+				<td>
+					<input name="boxborder" type="hidden" class="J_color_input bgcolor" value="{$boxborder}">
+					<span class="J_color_picker color_pick"><em style="background:{$boxborder};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>模块链接颜色</th>
+				<td>
+					<input name="boxlink" type="hidden" class="J_color_input bgcolor" value="{$boxlink}">
+					<span class="J_color_picker color_pick"><em style="background:{$boxlink};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>模块文本颜色</th>
+				<td>
+					<input name="boxtext" type="hidden" class="J_color_input bgcolor" value="{$boxtext}">
+					<span class="J_color_picker color_pick"><em style="background:{$boxtext};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>标题栏背景图片</th>
+				<td>
+				<div class="mb5"><input name="boxhdbg" class="J_upload_preview" type="file" data-preview="#J_boxhdbg_preview"></div>
+					<!--# if($boxhdbg){ #-->
+					<img id="J_boxhdbg_preview" src="{@Pw::getPath($boxhdbg)}" align="top" class="mr10">
+					<a class="J_ajax_del" href="{@url:appcenter/style/delete?type=boxhdbg&path=$boxhdbg}">[删除]</a>
+					<input type="hidden" name="oldboxhdbg" value="{$boxhdbg}">
+					<!--# }else{ #-->
+					<img id="J_boxhdbg_preview" style="display:none">
+					<!--# } #-->
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>标题栏背景颜色</th>
+				<td><input name="boxhdbgcolor" type="hidden" class="J_color_input bgcolor" value="{$boxhdbgcolor}">
+					<span class="J_color_picker color_pick"><em style="background:{$boxhdbgcolor};"></em></span>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>标题栏背景展示方式</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="boxhdbgtile" type="radio" value="no-repeat" {@Pw::ifcheck($boxhdbgtile == "no-repeat")}><span>正常</span></label></li>
+						<li><label><input name="boxhdbgtile" type="radio" value="fixed" {@Pw::ifcheck($boxhdbgtile == "fixed")}><span>锁定</span></label></li>
+						<li><label><input name="boxhdbgtile" type="radio" value="repeat-x" {@Pw::ifcheck($boxhdbgtile == "repeat-x")}><span>横向平铺</span></label></li>
+						<li><label><input name="boxhdbgtile" type="radio" value="repeat-y" {@Pw::ifcheck($boxhdbgtile == "repeat-y")}><span>竖向平铺</span></label></li>
+						<li><label><input name="boxhdbgtile" type="radio" value="repeat" {@Pw::ifcheck($boxhdbgtile == "repeat")}><span>完全平铺</span></label></li>
+					</ul>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>标题栏背景展示位置</th>
+				<td>
+					<ul class="single_list cc">
+						<li><label><input name="boxhdbgalign" type="radio" value="center" {@Pw::ifcheck($boxhdbgalign == "center")}><span>居中</span></label></li>
+						<li><label><input name="boxhdbgalign" type="radio" value="left" {@Pw::ifcheck($boxhdbgalign == "left")}><span>居左</span></label></li>
+						<li><label><input name="boxhdbgalign" type="radio" value="right" {@Pw::ifcheck($boxhdbgalign == "right")}><span>居右</span></label></li>
+					</ul>
+				</td>
+				<td><div class="fun_tips"></div></td>
+			</tr>
+			<tr>
+				<th>标题栏边框颜色</th>
+				<td>
+					<input name="boxhdborder" type="hidden" class="J_color_input bgcolor" value="{$boxhdborder}">
+					<span class="J_color_picker color_pick"><em style="background:{$boxhdborder};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>标题栏链接颜色</th>
+				<td>
+					<input name="boxhdlink" type="hidden" class="J_color_input bgcolor" value="{$boxhdlink}">
+					<span class="J_color_picker color_pick"><em style="background:{$boxhdlink};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>标题栏文本颜色</th>
+				<td>
+					<input name="boxhdtext" type="hidden" class="J_color_input bgcolor" value="{$boxhdtext}">
+					<span class="J_color_picker color_pick"><em style="background:{$boxhdtext};"></em></span>
+				</td>
+				<td>
+					<div class="fun_tips">
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	
+	<div class="btn_wrap">
+		<div class="btn_wrap_pd">
+			<button class="J_ajax_submit_btn btn btn_submit" type="submit">提交</button>
+		</div>
+	</div>
+	</form>
+	<template source='TPL:admin.common.footer' />
+</div>
+</body>
+<script>
+Wind.use('colorPicker', function() {
+	$('.J_color_picker').colorPicker({
+		callback : function(color) {
+			$(this).find('em').css('background', color);
+			$(this).prev('.J_color_input').val(color);
+		}
+	});
+});
+</script>
+</html>
